@@ -227,86 +227,66 @@ function swapCase()
     console.log(str);
 }
 //Ex.10
-function printNested (arr) 
+function parseFromInput(str, arr)
 {
-    for (let key in arr) 
+    str = str.slice(1);
+    str = str.slice(0, -1);
+    console.log(str);
+    if(str[0] === "[" && str[str.length-1] === "]")
     {
-        if (Array.isArray(arr[key]) && 
-            Array.isArray(arr[key][0])) 
-        {  
-            console.log(`row ${key}:`);
-            printNested(arr[key]);  
-        }
-        else 
-        { 
-            console.log(arr[key]);  
-        }
-    }
-}
-function printArr(arr) 
-{
-    for (let key in arr) 
-    {
-        if (typeof arr[key] === "object" &&
-            typeof arr[key][0] === "object") 
-        {  
-            console.log(` row ${key}:`);          
-            printArr(arr[key]);   
-        } 
-        else 
-        {              
-            console.log(arr[key]);  
-        }
-    }
-}
-
-function parseFromInput(str)
-{
-    let parent = str.split("~");
-    let child = [];
-    let arr = [];
-
-    for(i in parent)
-    {
-        child[i] = [];
-        child[i].push( parent[i].split(";"));
-    }
-    //console.log(child);
-
-    for(i in child)
-    {
-        arr[i] = [];
-        for(k in child[i])
+        let tmp = str.split("],");
+        for(i in tmp)
         {
-            arr[i][k] = [];
-            for(l in child[i][k])  
-            {
-                arr[i][k][l] = [];
-                arr[i][k][l].push(child[i][k][l].split(","));
-            }       
+            if(tmp[i][0] === "[") tmp[i] = tmp[i].slice(1);
+            if(tmp[i][tmp[i].length-1] === "]") tmp[i] = tmp[i].slice(0, -1);
+
+            arr[i] = [];
+            arr[i].push(tmp[i].split(','));
         }
+        //console.log(arr);
+    }
+    else
+    {
+        arr = str.split(',');        
     }
     return arr;
 }
-
-function nestedArr()
+function printNestArr(arr)
+{
+    for(key in arr)
+    {
+        if (Array.isArray(arr[key]) && 
+            Array.isArray(arr[key][0])) 
+        {            
+            console.log(`row ${key}`);
+            printNestArr(arr[key]);
+        }
+        else
+        {
+            console.log(arr[key]);
+        }
+    }
+}
+function getSetNestArr()
 {
     let str = 
-    prompt("Some chars separated by comma , are nested array .\n\
-            All nested arrays are separated by ; .\n\
-                    Optional: third nesting level has separator ~ .");
+    prompt("Please give me a bracketed array, elements are separated by comma.\n\
+            Nested array has the same format");
     if (!str)
     {
         document.querySelector("#txt10").value = `Empty input`;
         return;
-    }  
-    let arr = parseFromInput(str);
-
-
-    console.log("arr: ",arr);
-    printNested (arr);
-    // printArr (arr);
-    document.querySelector("#txt10").value = "The aray is shown in the console";
+    }
+    if(str[0] !== "[" || str[str.length-1] !== "]")
+    {
+        document.querySelector("#txt10").value = `I need a bracketed array`;
+        return;       
+    }    
+    let arr = [];
+    arr = parseFromInput(str, arr);
+    //console.log(arr);
+    printNestArr(arr);
+    document.querySelector("#txt10").value = "The array is shown on the console.";
 }
 //Animation:
 let sgn = 1;
