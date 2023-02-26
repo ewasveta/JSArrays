@@ -1,0 +1,29 @@
+#grid       {
+                display: grid;
+                padding: .1em;
+                gap: .1em;
+                text-align: center;
+            }
+.cell       {
+                padding: 0.1em;
+            } 
+#divHdr     {
+                grid-row: 1;
+                grid-column: 1/ span 2;
+                display: grid;
+                grid-template-columns: auto auto;
+                padding: 0 3em 0 3em;
+            }
+#divHdr p   {
+                margin:0;  
+                padding: 0.7em;           
+                font-size: 2em;
+                font-family: Tahoma;
+                background-color:rgba(130, 250, 180, 0.6);
+            }
+.subGrid    {
+                display: grid;
+                grid-template-columns: 10% 35% 52%;
+                padding: .4em;
+                gap: .7em;
+            }            
